@@ -11,6 +11,11 @@ class RobotAction
             MOVE_SEVERL_TIME = 1;
             PERSIST = 2;
         }
+        enum ACTION_TYPE{
+            UP = 0;
+            DOWN = 1;
+
+        }
         RobotAction();
         virtual ~RobotAction();
 

@@ -19,9 +19,12 @@ bool Robot::Init(){
 }
 
 bool Robot::StartSLAM(){
-    slamSystem->Init();
+    if(!slamSystem->Init()){
+        std::cout << "SLAM system not initial success ..." << std::endl;
+        return false;
+    }
     mptSLAM = std::make_shared<thread>(new thread(&SLAM::Run(), slamSystem.get()));
-
+    return true;
 }
 static std::shared_ptr<Robot> Robot::getRobot(){
     if(robot == nullptr){

@@ -1,6 +1,6 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
-
+#include <memory>
 
 class Configuration
 {
@@ -9,6 +9,8 @@ class Configuration
         Configuration();
         /** Default destructor */
         virtual ~Configuration();
+        static std::shared_ptr<Configuration> GetConfigInstance();
+        static std::shared_ptr<Configuration> config;
 
     protected:
 

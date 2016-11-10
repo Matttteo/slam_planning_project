@@ -3,6 +3,7 @@
 RobotState::RobotState()
 {
     //ctor
+
 }
 
 RobotState::~RobotState()

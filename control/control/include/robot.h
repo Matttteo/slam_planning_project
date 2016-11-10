@@ -28,7 +28,6 @@ class Robot
 
         static std::shared_ptr<Robot> getRobot();
         //初始化系统元件
-        static std::shared_ptr<Config>  GetConfigInstance();
         static std::shared_ptr<SLAM>  GetSLAMInstance();
         static std::shared_ptr<Planning>  GetPlanningInstance();
         static std::shared_ptr<RobotAction> GetActionInstance();
