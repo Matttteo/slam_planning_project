@@ -16,6 +16,7 @@ bool Robot::Init(){
     planningSystem = GetPlanningInstance();
     action = GetActionInstance();
     state = GetRobotStateInstance();
+    teacher = GetTeacherInstance();
 }
 
 bool Robot::StartSLAM(){
@@ -23,9 +24,27 @@ bool Robot::StartSLAM(){
         std::cout << "SLAM system not initial success ..." << std::endl;
         return false;
     }
-    mptSLAM = std::make_shared<thread>(new thread(&SLAM::Run(), slamSystem.get()));
+    mptSLAM = std::make_shared<thread>(*(new thread(&SLAM::Run(), slamSystem.get())));
     return true;
 }
+
+bool Robot::StartPlanning(){
+    if(!planningSystem->Init()){
+        std::cout << "Planning system not initial success ..." << std::endl;
+        return false;
+    }
+    if(!teacher->IsFinished()){
+        std::cout << "Planning system not teached ... " << std::endl;
+        return false;
+    }
+    mptPlanning = std::make_shared<thread>(*(new thread(&Planning::Run(), planningSystem.get())));
+    return true;
+}
+
+void Robot::StartTeaching(){
+    teacher->RequestStart();
+}
+
 static std::shared_ptr<Robot> Robot::getRobot(){
     if(robot == nullptr){
         robot = std::make_shared<Robot>(Robot());
@@ -59,4 +78,12 @@ static std::shared_ptr<RobotState> Robot::GetRobotStateInstance(){
     if(state == nullptr){
         state = std::make_shared<RobotState>(RobotState())
     }
+    return state;
+}
+
+static std::shared_ptr<Teacher> Robot::GetTeacherInstance(){
+    if(teacher == nullptr){
+        teacher == std::make_shared<Teacher>(Teacher());
+    }
+    return teacher;
 }

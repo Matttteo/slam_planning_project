@@ -28,8 +28,8 @@ class Robot
         bool StartSLAM();
         bool StartPlanning();
 
-        bool StartTeaching();
-        bool StopTeaching();
+        void StartTeaching();
+        void StopTeaching();
         
 
         static std::shared_ptr<Robot> getRobot();
