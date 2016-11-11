@@ -9,6 +9,7 @@ class Planning;
 class RobotState;
 class RobotAction;
 class Config;
+class Teacher;
 class Robot
 {
     public:
@@ -25,6 +26,11 @@ class Robot
 
         bool Init();
         bool StartSLAM();
+        bool StartPlanning();
+
+        bool StartTeaching();
+        bool StopTeaching();
+        
 
         static std::shared_ptr<Robot> getRobot();
         //初始化系统元件
@@ -32,7 +38,7 @@ class Robot
         static std::shared_ptr<Planning>  GetPlanningInstance();
         static std::shared_ptr<RobotAction> GetActionInstance();
         static std::shared_ptr<RobotState> GetRobotStateInstance();
-
+        static std::shared_ptr<Teacher> GetTeacherInstance();
 
     protected:
 
@@ -44,11 +50,14 @@ class Robot
         static std::shared_ptr<Planning> planningSystem;// Planning 算法系统
         static std::shared_ptr<RobotAction> action;//
         static std::shared_ptr<RobotState> state;
+        static std::shared_ptr<Teacher> teacher;
 
         //SLAM 主线程
         std::shared_ptr<std::thread> mptSLAM;
         //Planning 主线程
         std::shared_ptr<std::thread> mptPlanning;
+        //teach 线程
+        std::shared_ptr<std::thread> mptTeaching;
 
 };
 
